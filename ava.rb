@@ -1,0 +1,1 @@
+10000000000.times { print "AVA "}

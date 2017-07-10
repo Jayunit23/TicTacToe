@@ -1,9 +1,15 @@
 class Grid
-	def initalise()
+	attr_accessor :grid
+	def initalize
 		@grid = [[".",".","."],[".",".","."],[".",".","."]]
-	en
+	end
+	def draw_grid(arr)
+		
+		arr.each_with_index  do |row,x|
+			puts row.each {|p| p}.join("_|_")
 
-	def draw_grid
-		p @grid
+		end
 	end
 end
+#a=Grid.new
+#a.draw_grid([[".",".","."],[".",".","."],[".",".","."]])
