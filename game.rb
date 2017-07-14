@@ -1,6 +1,6 @@
 class Game
 
-	attr_accessor :name, :char ,:c, :choice, 
+	attr_accessor :name, :char ,:c, :choice
 	#bring in the player and grid rb files.
 	#require_relative 'player.rb'
 	#require_relative 'board.rb'
@@ -26,12 +26,25 @@ class Game
 		  char = player.char
 		  return choice, char
 	end
+	def win(player)
+		puts "#{player.name} WINS! \n What a Battle!"
+		puts "PLAY AGAIN? type Y"
+		answer = gets.chomp.capitalize
+			if answer == "Y"
+				@c =Board.new
+				@c.reset_board
+				play_game()
+			else
+				abort ("Thanks for Playing!")
+			end
+	end
 
 
 	def play_game
 		count = 0
 		marker = nil
 		win_flag = false
+		@c.draw_board
 		while count < 9
 
 			  if count % 2 ==0
@@ -42,24 +55,30 @@ class Game
 				  char ="O"
 			  end
 		  var1, var2 = take_move(marker)
-		  @c.update_board(var1.to_i,var2)
-		  @c.check_win(char)
-		  count += 1
-		  if count == 9
-		  	puts "Game is a draw"
+		  update = @c.update_board(var1.to_i,var2)
+		  if update == false
+		  	count == count
+		  else
+		    checking_win = @c.check_win(char)
+		    if checking_win == true
+		    	win(marker)
+		    else
+		      count += 1
+		      if count == 9
+		  	    puts "Game is a draw"
+		      end
+		    end
+		    p count
 		  end
-		  p count
 
 		end
 
 	end
 
 end
-a = Game.new
+
 #--------------------
-a.check_choice(1)
+
+a = Game.new
 a.display_name
-b = Board.new
-b.draw_board
 a.play_game
-#b.update_board(a.play_game)

@@ -3,7 +3,8 @@ class Board
 	def initialize
 		@board = @board = [1,2,3,4,5,6,7,8,9]
 		@wins_combo = [[0,3,6],[1,4,7],[2,5,8],[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6]]
-		
+		@win = false
+
 	end
 #-------------------------------------------------------------------------------------------	
 	def draw_board
@@ -20,17 +21,20 @@ class Board
 		@board = @board = [1,2,3,4,5,6,7,8,9]
 	end
 #-------------------------------------------------------------------------------------------	
-	def available_options
-		p @board.select do |x|
-			p x 
-		end
+	def available_options(choice)
+		@board.include?(choice)
 	end
 #-------------------------------------------------------------------------------------------	
 	def update_board(choice,char)
-		@board[choice -1] = char
-		draw_board
-		check_win(char)
-		
+		x = available_options(choice)
+		if x == true
+			@board[choice -1] = char
+			draw_board
+			#check_win(char)
+		else
+			puts "This move is not possible please choose a valid move"
+			return false
+		end
 	end
 #-------------------------------------------------------------------------------------------	
 
@@ -38,35 +42,46 @@ class Board
 		results =[]
 		@wins_combo.each do |set|
 		  set.map do |i|
-			   if @board[i] == char
-			 	  results.push(@board[i])
-			   end
+		    if @board[i] == char
+              results.push(@board[i])
+			end
 		  end
 		    check_results(results,char)
+		   
 		    results = []
+		    if @win == true
+		      return @win
+			end
 		end
 	end
 #-------------------------------------------------------------------------------------------	
 	def check_results(results,char)
 		 if results[0..2] == [char,char,char]
 		 	p "win"
-		 	 return true
+		 	@win = true
+		 	#results = []
 
 		 end
 	end
 #-------------------------------------------------------------------------------------------	
 end
-a=Board.new
+=begin
+a= Board.new
 a.draw_board
-a.available_options
-a.update_board(3,"X")
-#a.check_win
-a.draw_board
+a.update_board(1,"X")
+a.check_win("X")
 a.update_board(5,"X")
-#a.check_win
-a.draw_board
-a.update_board(7,"X")
-#a.check_win
-a.draw_board
+a.check_win("X")
+
+a.update_board(9,"X")
+a.check_win("X")
 a.reset_board
-#end
+a.draw_board
+a.update_board(2,"X")
+a.check_win("X")
+a.update_board(5,"X")
+a.check_win("X")
+
+a.update_board(8,"X")
+a.check_win("X")
+=end
