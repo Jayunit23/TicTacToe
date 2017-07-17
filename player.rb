@@ -7,8 +7,4 @@ class Player
 	@char = char
 
   end
- 
-
 end
-
-

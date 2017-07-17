@@ -1,14 +1,16 @@
 class Board
-	attr_accessor 
+	
 	def initialize
 		@board = @board = [1,2,3,4,5,6,7,8,9]
 		@wins_combo = [[0,3,6],[1,4,7],[2,5,8],[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6]]
 		@win = false
 
 	end
-#-------------------------------------------------------------------------------------------	
+#-------------------------------------------------------------------------------------------
+#This draws the 3 by 3 board on the screen.	
+
 	def draw_board
-		puts "Tic-Tac-To Board \n \n"
+		puts "\nTic-Tac-To Board \n \n"
 		@board.each_with_index do |x,i| 
 			print "| #{x} |" unless (i + 1) % 3 == 0
 			if (i + 1) % 3 == 0
@@ -17,14 +19,14 @@ class Board
 		end
 	end
 #-------------------------------------------------------------------------------------------		
+#sets board back to oringal board no markers
 	def reset_board
 		@board = @board = [1,2,3,4,5,6,7,8,9]
 	end
 #-------------------------------------------------------------------------------------------	
-	def available_options(choice)
-		@board.include?(choice)
-	end
+
 #-------------------------------------------------------------------------------------------	
+#takes users choice and char either X or O update it on the araay and call the redraw.
 	def update_board(choice,char)
 		x = available_options(choice)
 		if x == true
@@ -37,7 +39,7 @@ class Board
 		end
 	end
 #-------------------------------------------------------------------------------------------	
-
+#This has an array of wins call @win_combo it check each of these combinations and passes it to a result array which is check by the methods check_results.
 	def check_win(char)
 		results =[]
 		@wins_combo.each do |set|
@@ -55,33 +57,17 @@ class Board
 		end
 	end
 #-------------------------------------------------------------------------------------------	
+private
 	def check_results(results,char)
 		 if results[0..2] == [char,char,char]
-		 	p "win"
 		 	@win = true
 		 	#results = []
 
 		 end
 	end
 #-------------------------------------------------------------------------------------------	
+	#checks to see if the users choice is valid i.e between 1-0 and not already taken.
+	def available_options(choice)
+		@board.include?(choice)
+	end
 end
-=begin
-a= Board.new
-a.draw_board
-a.update_board(1,"X")
-a.check_win("X")
-a.update_board(5,"X")
-a.check_win("X")
-
-a.update_board(9,"X")
-a.check_win("X")
-a.reset_board
-a.draw_board
-a.update_board(2,"X")
-a.check_win("X")
-a.update_board(5,"X")
-a.check_win("X")
-
-a.update_board(8,"X")
-a.check_win("X")
-=end
